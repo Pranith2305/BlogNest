@@ -19,9 +19,6 @@ export const useBlog = ({ id }: { id: string }) => {
         const storedToken = JSON.parse(localStorage.getItem("token") || '{}');
         const token = storedToken.jwt;
 
-        console.log("Fetching blog with ID:", id);
-        console.log("Using token:", token);
-
         if (!token) {
             console.error("Token is missing!");
             setLoading(false);
@@ -52,16 +49,13 @@ export const useBlog = ({ id }: { id: string }) => {
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blogs, setBlogs] = useState([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchBlogs = async () => {
             const storedToken = JSON.parse(localStorage.getItem("token") || '{}');
-            const token = storedToken.jwt;
-
-            console.log("Fetching all blogs");
-            console.log("Using token:", token);
+            const token = storedToken.jwt;  
 
             if (!token) {
                 console.error("Token is missing!");

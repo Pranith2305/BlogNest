@@ -1,7 +1,7 @@
 import AppBar from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
-import { useBlogs } from "../hooks";
+import { Blog, useBlogs } from "../hooks";
 
 const Blogs = () => {
   const { loading, blogs } = useBlogs();
@@ -17,7 +17,7 @@ const Blogs = () => {
   }
 
   // Hard-coded fallback blogs
-  const fallbackBlogs = [
+  const fallbackBlogs : Blog[] = [
     {
       id: '1',
       author: { name: 'John Doe' },

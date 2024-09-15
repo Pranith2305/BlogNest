@@ -13,7 +13,7 @@ function Blog() {
   });
 
   // Show loading skeleton while fetching data
-  if (loading) {
+  if (loading || !blog) {
     return (
       <div className="h-screen flex flex-col justify-center">
         <div className="flex justify-center">

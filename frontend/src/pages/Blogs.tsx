@@ -6,7 +6,7 @@ import { useBlogs } from "../hooks";
 const Blogs = () => {
   const { loading, blogs } = useBlogs();
 
-  if (loading) {
+  if (loading || !blogs) {
     return (
       <div className="h-screen flex flex-col justify-center">
         <div className="flex justify-center">

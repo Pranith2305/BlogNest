@@ -49,7 +49,7 @@ export const useBlog = ({ id }: { id: string }) => {
 
 export const useBlogs = () => {
     const [loading, setLoading] = useState(true);
-    const [blogs, setBlogs] = useState([]);
+    const [blogs, setBlogs] = useState<Blog[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -65,14 +65,14 @@ export const useBlogs = () => {
             }
 
             try {
-                const response = await axios.get(`${BackendURL}/api/v1/blog/bulk`, {
+                const response = await axios.get<Blog[]>(`${BackendURL}/api/v1/blog/bulk`, {
                     headers: {
                         Authorization: `${token}`,
                     },
                 });
 
                 console.log("Response from bulk fetch:", response.data);
-                setBlogs(response.data.posts || []);
+                setBlogs(response.data);
                 setError(null); // Clear error on success
             } catch (err) {
                 console.error("Error fetching blogs:", err);

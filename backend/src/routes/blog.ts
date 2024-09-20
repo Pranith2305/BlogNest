@@ -110,28 +110,39 @@ blogRouter.get('/:id', async (c) => {
 })
 
 blogRouter.get('/bulk', async (c) => {
-	const prisma = new PrismaClient({
-		datasourceUrl: c.env?.DATABASE_URL,
-	 }).$extends(withAccelerate());
- 
-	const posts = await prisma.post.findMany({
-	   select: {
-		  id: true,
-		  title: true,
-		  content: true,
-		  author: {
-			 select: {
-				name: true
-			 }
-		  }
-	   }
-	});
- 
-	console.log('Fetched posts:', posts);  // Log the fetched posts
- 
-	return c.json({
-	   posts
-	});
- });
+	try {
+		const prisma = new PrismaClient({
+			datasourceUrl: c.env?.DATABASE_URL,
+		}).$extends(withAccelerate());
 
+		const posts = await prisma.post.findMany({
+			select: {
+				id: true,
+				title: true,
+				content: true,
+				author: {
+					select: {
+						name: true
+					}
+				}
+			}
+		});
+
+		console.log('Fetched posts:', posts);  // Log the fetched posts
+
+		if (posts.length === 0) {
+			console.log('No posts found in the database.');
+		}
+
+		return c.json({
+			posts
+		});
+	} catch (error) {
+		console.error('Error fetching posts:', error);
+		c.status(500);
+		return c.json({
+			error: 'Internal Server Error'
+		});
+	}
+});
   
